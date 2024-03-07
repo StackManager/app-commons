@@ -9,6 +9,11 @@ export class DatabaseError extends ModelErrorBase {
   }
 
   serializeErrors() {
-    return [{ message: this.message, code: this.code, type:'DatabaseError', detail: this.detail }];
+    return [{ 
+      message: this.message, 
+      code: this.code, 
+      type:'DatabaseError', 
+      detail: this.detail 
+    }];
   }
 }
