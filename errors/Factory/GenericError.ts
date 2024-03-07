@@ -20,14 +20,17 @@ export class GenericError extends ModelErrorBase {
 
   serializeErrors(): { message: string; errors?: string | undefined; detail?: string | undefined; }[] {
     return this.errors.map((err) => {
-      const code = (err as IGenericErrorProps).code  || undefined;
-      const index = (err as IGenericErrorProps).index || undefined;
-      const message = (err as IGenericErrorProps).message || undefined;
-      const field = (err as IGenericErrorProps).field || undefined;
-      const detail = this.detail || undefined;
+      const code = (err as IGenericErrorProps).code  || '';
+      const index = (err as IGenericErrorProps).index || '';
+      const message = (err as IGenericErrorProps).message || '';
+      const field = (err as IGenericErrorProps).field || '';
+      const detail = this.detail || '';
       return { 
-        message: message || '', // Ensure message is not undefined
-        detail: detail ? JSON.stringify({detail, code, index, field}) : undefined, // Ensure detail is a string or undefined
+        message: message || '',
+        code,
+        index,
+        field,
+        detail
       };
     });
   }
