@@ -1,6 +1,6 @@
 
 import mongoose from 'mongoose';
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '..';
+import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
 
 interface ValidationInput {
   value: any;

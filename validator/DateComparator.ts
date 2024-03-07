@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '@Helpers/errors/types/RequestValidationError';
+import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
 
 
 export class DateComparator  {

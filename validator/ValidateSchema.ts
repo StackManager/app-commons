@@ -1,6 +1,6 @@
 
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '@Helpers/errors/types/RequestValidationError';
-import { Document, Model, Types } from 'mongoose';
+import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+import { Document, Model } from 'mongoose';
 
 class ValidateSchema {
 
