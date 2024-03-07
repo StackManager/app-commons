@@ -1,5 +1,7 @@
+import { GenericError } from '@Commons/errors/Factory/GenericError';
+import { MODELERRORTEXTTYPE } from '@Commons/errors/ModelErrorConfig';
 import moment from 'moment';
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+
 
 interface ValidationInput {
   value: any;
@@ -26,11 +28,11 @@ export class ValidateDate {
     const variable = name || 'Value';
     
     if (!this.validate(value)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} is not a valid date in MM-DD-YY format`,
         field: variable,
         detail: `${variable} is not a valid date in MM-DD-YY format`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
   }

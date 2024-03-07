@@ -1,4 +1,6 @@
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+import { GenericError } from '@Commons/errors/Factory/GenericError';
+import { MODELERRORTEXTTYPE } from '@Commons/errors/ModelErrorConfig';
+
 
 
 interface EmailValidationInput {
@@ -16,20 +18,20 @@ export class ValidateEmail {
     const variable = name || 'Email';
     
     if (typeof value !== 'string') {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} must be a string`,
         field: variable,
         detail: `${variable} must be a string`,
-        code: REQUESTVALIDATIONTYPE.is_value_invalid
+        code: MODELERRORTEXTTYPE.is_value_invalid
       }]);
     }
 
     if (!this.validate(value)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} is not a valid email`,
         field: variable,
         detail: `${variable} is not a valid email`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
   }

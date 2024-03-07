@@ -10,6 +10,9 @@ export class NotAuthorizedError extends ModelErrorBase {
   }
 
   serializeErrors() {
-    return [{ message: 'Not authorized', detail: this.detail }];
+    return [{ 
+      message: 'Not authorized', 
+      detail: this.detail 
+    }];
   }
 }

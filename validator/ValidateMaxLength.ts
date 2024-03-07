@@ -1,4 +1,6 @@
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+import { GenericError } from '@Commons/errors/Factory/GenericError';
+import { MODELERRORTEXTTYPE } from '@Commons/errors/ModelErrorConfig';
+
 
 interface ValidationInput {
   value: any;
@@ -17,20 +19,20 @@ export class ValidateMaxLength {
     
 
     if (typeof value !== 'string') {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} must be a string`,
         field: variable,
         detail: `${variable} must be a string`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
 
     if (!this.validate(value, maxLength)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} exceeds the maximum length`,
         field: variable,
         detail: `${variable} exceeds the maximum length of ${maxLength} characters`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
   }

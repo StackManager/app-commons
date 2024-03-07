@@ -1,5 +1,7 @@
+import { GenericError } from '@Commons/errors/Factory/GenericError';
+import { MODELERRORTEXTTYPE } from '@Commons/errors/ModelErrorConfig';
 import moment from 'moment';
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+
 
 interface ValidationInput {
   value: string;
@@ -19,11 +21,11 @@ export class ValidateTime {
     const variable = name || 'Value';
     
     if (!this.validate(value)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} is not a valid time in HH:mm format`,
         field: variable,
         detail: `${variable} is not a valid time in HH:mm format`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
   }

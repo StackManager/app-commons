@@ -10,6 +10,9 @@ export class NotFoundError extends ModelErrorBase {
   }
 
   serializeErrors() {
-    return [{ message: 'Not Found', detail: this.detail }];
+    return [{ 
+      message: 'Not Found', 
+      detail: this.detail 
+    }];
   }
 }

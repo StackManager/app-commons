@@ -1,5 +1,7 @@
+import { GenericError } from '@Commons/errors/Factory/GenericError';
+import { MODELERRORTEXTTYPE } from '@Commons/errors/ModelErrorConfig';
 import moment from 'moment';
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+
 
 
 export class DateComparator  {
@@ -19,21 +21,21 @@ export class DateComparator  {
   
   static isDateBefore(date1: string | Date, date2: string | Date): boolean {
     if (!this.validate(date1) || !this.validate(date2)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `One or both dates are not valid in YYYY-MM-DD format`,
         field: 'dateStart',
         detail: `One or both dates are not valid in YYYY-MM-DD format`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
 
     const isBefore = moment(date1).isBefore(date2);
     if (!isBefore) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `Date '${date1}' is not before '${date2}'`,
         field: 'dateStart',
         detail: `Date '${date1}' is not before '${date2}'`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
 
@@ -42,21 +44,21 @@ export class DateComparator  {
 
   static isDateAfter(date1: string | Date, date2: string | Date): boolean {
     if (!this.validate(date1) || !this.validate(date2)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `One or both dates are not valid in YYYY-MM-DD format`,
         field: 'dateStart',
         detail: `One or both dates are not valid in YYYY-MM-DD format`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
 
     const isAfter = moment(date1).isAfter(date2);
     if (!isAfter) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `Date '${date1}' is not after '${date2}'`,
         field: 'dateStart',
         detail: `Date '${date1}' is not after '${date2}'`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
 
@@ -65,21 +67,21 @@ export class DateComparator  {
 
   static isDateEqual(date1: string | Date, date2: string | Date): boolean {
     if (!this.validate(date1) || !this.validate(date2)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `One or both dates are not valid in YYYY-MM-DD format`,
         field: 'dateStart',
         detail: `One or both dates are not valid in YYYY-MM-DD format`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
 
     const isEqual = moment(date1).isSame(date2);
     if (!isEqual) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `Date '${date1}' is not equal to '${date2}'`,
         field: 'dateStart',
         detail: `Date '${date1}' is not equal to '${date2}'`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
 

@@ -1,4 +1,6 @@
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+import { GenericError } from "@Commons/errors/Factory/GenericError";
+import { MODELERRORTEXTTYPE } from "@Commons/errors/ModelErrorConfig";
+
 
 interface ValidationInput {
   value: any;
@@ -11,47 +13,47 @@ export class ValidatePassword {
     const maxLength = 20;
 
     if (value.length < minLength || value.length > maxLength) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `Password must be between ${minLength} and ${maxLength} characters`,
         field: 'Password',
         detail: `Password must be between ${minLength} and ${maxLength} characters`,
-        code: REQUESTVALIDATIONTYPE.password_betweeb_4_20
+        code: MODELERRORTEXTTYPE.password_betweeb_4_20
       }]);
     }
 
     if (!/\d/.test(value)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: 'Password must contain at least one digit',
         field: 'Password',
         detail: 'Password must contain at least one digit',
-        code: REQUESTVALIDATIONTYPE.password_at_least_one_digit
+        code: MODELERRORTEXTTYPE.password_at_least_one_digit
       }]);
     }
 
     if (!/[a-z]/.test(value)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: 'Password must contain at least one lowercase letter',
         field: 'Password',
         detail: 'Password must contain at least one lowercase letter',
-        code: REQUESTVALIDATIONTYPE.passwoard_at_least_lowercase
+        code: MODELERRORTEXTTYPE.passwoard_at_least_lowercase
       }]);
     }
 
     if (!/[A-Z]/.test(value)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: 'Password must contain at least one uppercase letter',
         field: 'Password',
         detail: 'Password must contain at least one uppercase letter',
-        code: REQUESTVALIDATIONTYPE.password_at_least_uppercase
+        code: MODELERRORTEXTTYPE.password_at_least_uppercase
       }]);
     }
 
     if (!/[!@#$%^&*]/.test(value)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: 'Password must contain at least one special character',
         field: 'Password',
         detail: 'Password must contain at least one special character',
-        code: REQUESTVALIDATIONTYPE.password_at_least_special
+        code: MODELERRORTEXTTYPE.password_at_least_special
       }]);
     }
 
@@ -63,11 +65,11 @@ export class ValidatePassword {
     const variable = name || 'Password';
 
     if (typeof value !== 'string') {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} must be a string`,
         field: variable,
         detail: `${variable} must be a string`,
-        code: REQUESTVALIDATIONTYPE.is_value_invalid
+        code: MODELERRORTEXTTYPE.is_value_invalid
       }]);
     }
 

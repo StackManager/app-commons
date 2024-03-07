@@ -1,4 +1,6 @@
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+import { GenericError } from "@Commons/errors/Factory/GenericError";
+import { MODELERRORTEXTTYPE } from "@Commons/errors/ModelErrorConfig";
+
 
 interface ValidationInput {
   value: any;
@@ -23,11 +25,11 @@ export class ValidateIn {
     const variable = name || 'Value';
     
     if (!this.validate(value, validOptions)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} is not one of the valid options: ${validOptions.join(', ')}`,
         field: variable,
         detail: `${variable} is not one of the valid options: ${validOptions.join(', ')}`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
   }
