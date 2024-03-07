@@ -1,5 +1,5 @@
-
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+import { GenericError } from '@Commons/errors/Factory/GenericError';
+import { MODELERRORTEXTTYPE } from '@Commons/errors/ModelErrorConfig';
 import { Document, Model } from 'mongoose';
 
 class ValidateSchema {
@@ -14,20 +14,20 @@ class ValidateSchema {
     try {
       existingDoc = await model.findOne(filter);
     } catch (error) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${fieldName as string} system error consulting (ValidateSchema)`,
         field: fieldName as string,
         detail: `${fieldName as string} system error consulting (ValidateSchema)`,
-        code: REQUESTVALIDATIONTYPE.is_instance_no_exist
+        code: MODELERRORTEXTTYPE.is_instance_no_exist
       }]);
     }
     
     if (existingDoc) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${fieldName as string} is duplicated in our database`,
         field: fieldName as string,
         detail: `${fieldName as string} is duplicated in our database`,
-        code: REQUESTVALIDATIONTYPE.is_value_duplicated
+        code: MODELERRORTEXTTYPE.is_value_duplicated
       }]);
     }
   }
@@ -42,20 +42,20 @@ class ValidateSchema {
     try {
       const existingDoc = await model.findOne(filter);
       if (!existingDoc) {
-        throw new RequestValidationError([{
+        throw new GenericError([{
           message: `${fieldName} not found`,
           field: fieldName,
           detail: `${fieldName} not found`,
-          code: REQUESTVALIDATIONTYPE.is_invalid
+          code: MODELERRORTEXTTYPE.is_invalid
         }]);
       }
       
     } catch (error) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${fieldName} system error consulting`,
         field: fieldName,
         detail: `${fieldName} system error consulting`,
-        code: REQUESTVALIDATIONTYPE.is_system_error
+        code: MODELERRORTEXTTYPE.is_system_error
       }]);
     }
 

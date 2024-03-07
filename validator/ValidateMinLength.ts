@@ -1,4 +1,5 @@
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+import { GenericError } from "@Commons/errors/Factory/GenericError";
+import { MODELERRORTEXTTYPE } from "@Commons/errors/ModelErrorConfig";
 
 
 interface ValidationInput {
@@ -18,20 +19,20 @@ export class ValidateMinLength {
     
 
     if (typeof value !== 'string') {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} must be a string`,
         field: variable,
         detail: `${variable} must be a string`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
 
     if (!this.validate(value, minLength)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} does not meet the minimum length requirement`,
         field: variable,
         detail: `${variable} does not meet the minimum length requirement of ${minLength} characters`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
   }

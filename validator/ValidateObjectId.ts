@@ -1,6 +1,8 @@
 
+import { GenericError } from '@Commons/errors/Factory/GenericError';
+import { MODELERRORTEXTTYPE } from '@Commons/errors/ModelErrorConfig';
 import mongoose from 'mongoose';
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
+
 
 interface ValidationInput {
   value: any;
@@ -17,11 +19,11 @@ export class ValidateObjectId {
     const variable = name || 'ObjectId';
 
     if (!this.validate(value)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} is not a valid ObjectId`,
         field: variable,
         detail: `${variable} is not a valid ObjectId`,
-        code: REQUESTVALIDATIONTYPE.is_invalid
+        code: MODELERRORTEXTTYPE.is_invalid
       }]);
     }
   }

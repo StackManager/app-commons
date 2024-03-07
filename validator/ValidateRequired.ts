@@ -1,5 +1,5 @@
-import { REQUESTVALIDATIONTYPE, RequestValidationError } from '../errors/types/RequestValidationError';
-
+import { GenericError } from "@Commons/errors/Factory/GenericError";
+import { MODELERRORTEXTTYPE } from "@Commons/errors/ModelErrorConfig";
 
 interface ValidationInput {
   value: any;
@@ -16,11 +16,11 @@ export class ValidateRequired {
     const variable = name || 'Value';
     
     if (!this.validate(value)) {
-      throw new RequestValidationError([{
+      throw new GenericError([{
         message: `${variable} is required`,
         field: variable,
         detail: `${variable} is required`,
-        code: REQUESTVALIDATIONTYPE.is_value_no_exist
+        code: MODELERRORTEXTTYPE.is_value_no_exist
       }]);
     }
   }
