@@ -1,6 +1,7 @@
-import { GenericError } from "@Helpers/errors/Factory/GenericError";
-import { MODELERRORTEXTTYPE } from "@Helpers/errors/ModelErrorConfig";
-import { FilterOptions } from "./BaseReader";
+import { GenericError } from "@Commons/errors/factory/generic.error";
+import { FilterOptions } from "./crud.filter.base";
+import { MODELERRORTEXTTYPE } from "@Commons/errors/error.types";
+
 
 export class BaseList<T> {
 

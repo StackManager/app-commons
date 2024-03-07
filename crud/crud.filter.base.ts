@@ -1,5 +1,6 @@
-import { GenericError } from "@Helpers/errors/Factory/GenericError";
-import { MODELERRORTEXTTYPE } from "@Helpers/errors/ModelErrorConfig";
+import { GenericError } from "@Commons/errors/factory/generic.error";
+import { MODELERRORTEXTTYPE } from "@Commons/errors/error.types";
+
 
 
 export interface FilterOptions {

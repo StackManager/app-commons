@@ -1,4 +1,4 @@
-import { ModelErrorBase } from '../ModelErrorBase';
+import { ModelErrorBase } from '../error.base';
 
 export class BadRequestError extends ModelErrorBase {
   statusCode = 400;

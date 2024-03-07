@@ -1,5 +1,5 @@
-import { GenericError } from '@Commons/errors/Factory/GenericError';
-import { MODELERRORTEXTTYPE } from '@Commons/errors/ModelErrorConfig';
+import { GenericError } from '@Commons/errors/factory/generic.error';
+import { MODELERRORTEXTTYPE } from '@Commons/errors/error.types';
 
 
 interface ValidationInput {

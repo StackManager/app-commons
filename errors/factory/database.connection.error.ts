@@ -1,4 +1,4 @@
-import { ModelErrorBase } from '../ModelErrorBase';
+import { ModelErrorBase } from '../error.base';
 
 export class DatabaseConnectionError extends ModelErrorBase {
   statusCode = 500;

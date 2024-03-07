@@ -1,7 +1,8 @@
-import { GenericError } from "@Helpers/errors/Factory/GenericError";
-import { MODELERRORTEXTTYPE } from "@Helpers/errors/ModelErrorConfig";
 import { Model, Document, FilterQuery } from 'mongoose';
-import { FilterManager } from "./BaseFilter";
+import { FilterManager } from './crud.filter.base';
+import { GenericError } from '@Commons/errors/factory/generic.error';
+import { MODELERRORTEXTTYPE } from '@Commons/errors/error.types';
+
 
 export interface IPopulate{
   path: string,
