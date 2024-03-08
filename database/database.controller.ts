@@ -25,4 +25,18 @@ export class DataBaseController {
       throw new DatabaseConnectionError();
     }
   }
+
+  get(): Connection | null {
+    return this.connection;
+  }
+
+  async disconnect(): Promise<void> {
+    if (this.connection) {
+      await this.connection.close();
+      console.log("Disconnected from MongoDB");
+    }else{
+      console.log("Connection never was open");
+    }
+  }
+
 }
