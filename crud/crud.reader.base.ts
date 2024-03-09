@@ -1,8 +1,7 @@
-import { Model, Document, FilterQuery } from 'mongoose';
+import { Document } from 'mongoose';
 import { FilterManager } from './crud.filter.base';
 import { GenericError } from '@Commons/errors/factory/generic.error';
 import { MODELERRORTEXTTYPE } from '@Commons/errors/error.types';
-
 
 export interface IPopulate{
   path: string,
@@ -12,7 +11,6 @@ export interface IPopulate{
 export abstract class BaseReader<T extends Document> {
   
   protected variable: string;
-  protected filter: any = {};
   protected populateModules: Array<IPopulate> = [];
   filterManager = new FilterManager();
 
@@ -20,13 +18,13 @@ export abstract class BaseReader<T extends Document> {
     this.variable = variable;
   }
 
-  protected abstract  getModel(): Model<T>;
+  protected abstract  getModel(): any;
  
   async get(): Promise<T | undefined> {
     
     try {
 
-      let query = this.getModel().findOne({...this.filterManager.get()});
+      let query = await this.getModel().findOne({...this.filterManager.get()});
     
       // Aplicar población (populate) si hay configuraciones de población
       const populateLength = this.populateModules.length;

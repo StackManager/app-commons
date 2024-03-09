@@ -1,33 +1,22 @@
 import { GenericError } from "@Commons/errors/factory/generic.error";
-import { FilterOptions } from "./crud.filter.base";
+import { FilterManager, FilterOptions } from "./crud.filter.base";
 import { MODELERRORTEXTTYPE } from "@Commons/errors/error.types";
 
 
-export class BaseList<T> {
+export abstract class BaseList<T> {
 
   protected variable: string = 'Undefined';
-  private model: T;
-  protected filter: any = {};
-
-  constructor(model: T) {
-      this.model = model;
-      this.filter = {};
-  }
-
-  addFilter(options: FilterOptions): void {
-    switch (options.type) {
-      case 'regex':
-        this.filter[options.key] = new RegExp(options.value, 'i');
-        break;
-      default:
-        this.filter[options.key] = options.value;
-        break;
-    }
+  filterManager = new FilterManager();
+  
+  protected abstract  getModel():any;
+  
+  constructor(variable: string) {
+    this.variable = variable;
   }
 
   async paginate(options: { page: number; limit: number }) {
       try {
-          const result = await (this.model as any).paginate({...this.filter}, options);
+          const result = await this.getModel().paginate({...this.filterManager.get()}, options);
           //console.log('Total de registros:', result.total);
           //console.log('Resultados de la paginación:', result.docs);
           return result;
