@@ -1,11 +1,12 @@
-import { Document } from 'mongoose';
+import { Document, Model } from 'mongoose';
 import { FilterManager } from './crud.filter.base';
 import { GenericError } from '@Commons/errors/factory/generic.error';
 import { MODELERRORTEXTTYPE } from '@Commons/errors/error.types';
 
 export interface IPopulate{
   path: string,
-  select: string
+  select: string,
+  populate?: IPopulate
 }
 
 export abstract class BaseReader<T extends Document> {
@@ -18,25 +19,20 @@ export abstract class BaseReader<T extends Document> {
     this.variable = variable;
   }
 
-  protected abstract  getModel(): any;
+  protected abstract  getModel(): Model<T>;
  
   async get(): Promise<T | undefined> {
     
     try {
-
+      console.log(this.filterManager.get())
       let query = await this.getModel().findOne({...this.filterManager.get()});
-    
-      // Aplicar población (populate) si hay configuraciones de población
+      if (!query) return undefined;
+      
       const populateLength = this.populateModules.length;
-      for (let i = 0; i < populateLength; i++) {
-        const populateConfig = this.populateModules[i];
-        query.populate(populateConfig.path, populateConfig.select);
-      }
+      if (populateLength > 0)
+        query = await this.getModel().populate(query, this.populateModules);
 
-      const result = await query.exec();
-
-      if (!result) return undefined;
-      return result;
+      return query;
     } catch (error) {
       return undefined;
     }

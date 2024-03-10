@@ -1,4 +1,4 @@
-import express, { Express, Router } from 'express';
+import { Express, Router } from 'express';
 
 export class RouteController {
   
@@ -14,7 +14,8 @@ export class RouteController {
     this.app.use(this.prefix, router);
   }
 
-  public addRouters(routers: Router[]) {
-    routers.forEach((router) => this.addRouter(router));
+  public run() {
+    const { routes } = require('./../../routes'); 
+    routes.forEach((router: Router) => this.addRouter(router));
   }
 }

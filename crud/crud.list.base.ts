@@ -3,6 +3,19 @@ import { FilterManager, FilterOptions } from "./crud.filter.base";
 import { MODELERRORTEXTTYPE } from "@Commons/errors/error.types";
 
 
+interface PaginationResult<T> {
+  docs: T[]; // Array de documentos paginados
+  totalDocs: number; // Total de documentos
+  limit: number; // Límite de documentos por página
+  page: number; // Página actual
+  totalPages: number; // Total de páginas
+  hasNextPage: boolean; // Indica si hay una página siguiente
+  nextPage?: number; // Número de la página siguiente, opcional
+  hasPrevPage: boolean; // Indica si hay una página anterior
+  prevPage?: number; // Número de la página anterior, opcional
+  pagingCounter: number; // Contador de documentos paginados
+}
+
 export abstract class BaseList<T> {
 
   protected variable: string = 'Undefined';
@@ -14,12 +27,12 @@ export abstract class BaseList<T> {
     this.variable = variable;
   }
 
-  async paginate(options: { page: number; limit: number }) {
+  async paginate(options: { page: number; limit: number }): Promise<PaginationResult<T>>{
       try {
-          const result = await this.getModel().paginate({...this.filterManager.get()}, options);
-          //console.log('Total de registros:', result.total);
-          //console.log('Resultados de la paginación:', result.docs);
-          return result;
+
+        const result = await this.getModel().paginate({...this.filterManager.get()}, options);
+
+        return result;
       } catch (err) {
         throw new GenericError([{
           message: `${this.variable} error system listing results`,
@@ -28,6 +41,7 @@ export abstract class BaseList<T> {
           code: MODELERRORTEXTTYPE.is_system_error
         }]);
       }
+      
   }
 }
 
