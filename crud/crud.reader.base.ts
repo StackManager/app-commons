@@ -6,7 +6,7 @@ import { MODELERRORTEXTTYPE } from '@Commons/errors/error.types';
 export interface IPopulate{
   path: string,
   select: string,
-  populate?: IPopulate
+  populate?: IPopulate[]
 }
 
 export abstract class BaseReader<T extends Document> {

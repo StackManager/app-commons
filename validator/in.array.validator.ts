@@ -5,7 +5,7 @@ import { MODELERRORTEXTTYPE } from "@Commons/errors/error.types";
 interface ValidationInput {
   value: any;
   name?: string;
-  validOptions: any[]; // Agregamos validOptions aquí
+  validOptions: any[];
 }
 
 export class ValidateIn {

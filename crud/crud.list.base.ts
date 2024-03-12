@@ -1,6 +1,7 @@
 import { GenericError } from "@Commons/errors/factory/generic.error";
 import { FilterManager, FilterOptions } from "./crud.filter.base";
 import { MODELERRORTEXTTYPE } from "@Commons/errors/error.types";
+import { IPopulate } from "./crud.reader.base";
 
 
 interface PaginationResult<T> {
@@ -20,7 +21,7 @@ export abstract class BaseList<T> {
 
   protected variable: string = 'Undefined';
   filterManager = new FilterManager();
-  
+  protected populateModules: Array<IPopulate> = [];
   protected abstract  getModel():any;
   
   constructor(variable: string) {

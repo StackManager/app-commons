@@ -40,8 +40,11 @@ class ValidateSchema {
   ): Promise<void> {
 
     try {
-      const existingDoc = await model.findOne(filter);
-      if (!existingDoc) {
+      
+      const doc = await model.findOne(filter);
+
+      if (doc === null) {
+        console.log("entro al null")
         throw new GenericError([{
           message: `${fieldName} not found`,
           field: fieldName,
@@ -51,10 +54,11 @@ class ValidateSchema {
       }
       
     } catch (error) {
+      console.log(error);
       throw new GenericError([{
-        message: `${fieldName} system error consulting`,
+        message: `${fieldName} not found`,
         field: fieldName,
-        detail: `${fieldName} system error consulting`,
+        detail: `${fieldName} not found`,
         code: MODELERRORTEXTTYPE.is_system_error
       }]);
     }
