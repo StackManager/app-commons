@@ -17,6 +17,11 @@ interface PaginationResult<T> {
   pagingCounter: number; // Contador de documentos paginados
 }
 
+export interface ListElements {
+  name: string;
+  value: any;
+}
+
 export abstract class BaseList<T> {
 
   protected variable: string = 'Undefined';
