@@ -24,7 +24,7 @@ export abstract class BaseReader<T extends Document> {
   async get(): Promise<T | undefined> {
     
     try {
-      console.log(this.filterManager.get())
+
       let query = await this.getModel().findOne({...this.filterManager.get()});
       if (!query) return undefined;
       

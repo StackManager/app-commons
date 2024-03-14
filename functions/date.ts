@@ -1,7 +1,8 @@
+import { momentFormat } from "@Commons/constants/constants";
 
 
 const moment = require('moment');
-export const momentFormat = 'MM/DD/YY';
+
 
 
 export function daysFromToday(daysToAdd: number): string {
