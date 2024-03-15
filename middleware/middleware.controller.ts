@@ -15,14 +15,14 @@ export class MiddlewareController {
     this.req = req;
     this.res = res;
     this.next = next;
-    this.session = (this.getSession)? ControllerSession.get(req) : undefined;
   }
 
 
   async handleAsync(fn: Function): Promise<void> {
 
     try {
-
+      
+      this.session = (this.getSession)? ControllerSession.get(this.req) : undefined;
       await fn();
 
     } catch (err) {
@@ -37,7 +37,4 @@ export class MiddlewareController {
       });
     }
   }
-
-
-  
 }
