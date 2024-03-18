@@ -26,7 +26,7 @@ export interface ListElements {
 export abstract class BaseList<T> {
 
   protected variable: string = 'Undefined';
-  filterManager = new FilterManager();
+  protected filterManager = new FilterManager();
   protected populateModules: Array<IPopulate> = [];
   protected abstract  getModel():any;
   
