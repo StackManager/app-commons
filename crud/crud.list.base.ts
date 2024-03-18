@@ -33,10 +33,10 @@ export abstract class BaseList<T> {
     this.variable = variable;
   }
 
-  async paginate(options: { page: number; limit: number }): Promise<PaginationResult<T>>{
+  async paginate(options: { page: number; limit: number;}): Promise<PaginationResult<T>>{
       try {
 
-        const result = await this.getModel().paginate({...this.filterManager.get()}, options);
+        const result = await this.getModel().paginate({...this.filterManager.get()}, {...options, populate: this.populateModules});
 
         return result;
       } catch (err) {

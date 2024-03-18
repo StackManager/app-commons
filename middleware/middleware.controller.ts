@@ -1,13 +1,12 @@
 import { ModelErrorBase } from '@Commons/errors/error.base';
-import { ControllerSession } from '@Commons/session/controller.session';
-import { ISession } from '@Commons/session/session.interfaces';
+import { SessionData } from '@Commons/session/data/session.data';
 import { Request, Response, NextFunction } from 'express';
 
 export class MiddlewareController {
   protected req: Request;
   protected res: Response;
   protected next: NextFunction;
-  protected session: ISession | undefined;
+  protected session: SessionData;
   protected getSession: boolean = false;
   protected getPermission: string[] = [];
 
@@ -15,14 +14,17 @@ export class MiddlewareController {
     this.req = req;
     this.res = res;
     this.next = next;
+    this.session = new SessionData(this.req);
   }
-
-
+  
   async handleAsync(fn: Function): Promise<void> {
 
     try {
       
-      this.session = (this.getSession)? ControllerSession.get(this.req) : undefined;
+      if (this.getSession) {
+        this.session.run();
+      }
+
       await fn();
 
     } catch (err) {
