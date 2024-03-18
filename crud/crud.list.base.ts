@@ -2,6 +2,7 @@ import { GenericError } from "@Commons/errors/factory/generic.error";
 import { FilterManager, FilterOptions } from "./crud.filter.base";
 import { MODELERRORTEXTTYPE } from "@Commons/errors/error.types";
 import { IPopulate } from "./crud.reader.base";
+import { ValidateNumber } from "@Commons/validator/number.validator";
 
 
 interface PaginationResult<T> {
@@ -33,24 +34,32 @@ export abstract class BaseList<T> {
     this.variable = variable;
   }
 
-  async paginate(options: { page: number; limit: number;}): Promise<PaginationResult<T>>{
+  async paginate(options: { page: any; limit: any;}): Promise<PaginationResult<T>>{
       try {
 
-        const result = await this.getModel().paginate({...this.filterManager.get()}, {...options, populate: this.populateModules});
+      // Convertir los valores de página y límite a números antes de validarlos
+      const pageValue = parseInt(options.page);
+      const limitValue = parseInt(options.limit);
 
-        return result;
+      // Validar que los valores convertidos sean números válidos
+      ValidateNumber.validateOrFail({ value: pageValue, name: 'Page' });
+      ValidateNumber.validateOrFail({ value: limitValue, name: 'Limit' });
+      console.log(this.filterManager.get());
+      // Utilizar los valores convertidos en la paginación
+      return  await this.getModel().paginate(
+        {...this.filterManager.get()}, 
+        { 
+          page: pageValue, 
+          limit: limitValue, 
+          populate: this.populateModules 
+      });
+
       } catch (err) {
-        throw new GenericError([{
-          message: `${this.variable} error system listing results`,
-          field: this.variable,
-          detail: `${this.variable} error system listing results`,
-          code: MODELERRORTEXTTYPE.is_system_error
-        }]);
+
+        throw new GenericError([{ message: `${this.variable} error system listing results`, field: this.variable, detail: `${this.variable} error system listing results`, code: MODELERRORTEXTTYPE.is_system_error }]);
       }
-      
   }
 }
-
 
 // const User = require('./models/User'); // Suponiendo que tienes un modelo de usuario en './models/User.js'
 // const base = new Base(User);
