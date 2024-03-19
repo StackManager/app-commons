@@ -9,7 +9,7 @@ export class MiddlewareController {
   protected session: SessionData;
   protected getSession: boolean = false;
   protected getPermission: string[] = [];
-
+  
   constructor(req: Request, res: Response, next: NextFunction) {
     this.req = req;
     this.res = res;

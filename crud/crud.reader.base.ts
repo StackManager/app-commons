@@ -1,5 +1,5 @@
 import { Document, Model } from 'mongoose';
-import { FilterManager } from './crud.filter.base';
+import { FilterManager, FilterOptions } from './crud.filter.base';
 import { GenericError } from '@Commons/errors/factory/generic.error';
 import { MODELERRORTEXTTYPE } from '@Commons/errors/error.types';
 
@@ -65,6 +65,12 @@ export abstract class BaseReader<T extends Document> {
 
   getInstance<T>(value: any){
     return value as T;
+  }
+
+  async getById(value: any){
+    const filter: FilterOptions =  { value: value, key: "_id" };
+    this.filterManager.addFilter(filter);
+    return await this.getOrFail();
   }
 
 }
