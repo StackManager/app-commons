@@ -1,6 +1,5 @@
 import moment from "moment";
-import { DateFormat } from "helpers/models/validator/request/ValidatorBase";
-import { momentFormat } from "@Commons/constants/constants";
+import { DateFormat, momentFormat } from "@Commons/constants/constants";
 
 export class DateMoment {
 
