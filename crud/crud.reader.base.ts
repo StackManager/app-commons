@@ -24,14 +24,15 @@ export abstract class BaseReader<T extends Document> {
   async get(): Promise<T | undefined> {
     
     try {
-
-      let query = await this.getModel().findOne({...this.filterManager.get()});
-      if (!query) return undefined;
-      
+  
+      let query: T | null = null;
       const populateLength = this.populateModules.length;
       if (populateLength > 0)
-        query = await this.getModel().populate(query, this.populateModules);
-
+        query = await this.getModel().findOne(this.filterManager.get()).populate(this.populateModules) as T;
+      else  
+        query = await this.getModel().findOne(this.filterManager.get());
+      
+      if (!query) return undefined;
       return query;
     } catch (error) {
       return undefined;

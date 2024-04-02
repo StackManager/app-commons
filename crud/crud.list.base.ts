@@ -44,7 +44,7 @@ export abstract class BaseList<T> {
       // Validar que los valores convertidos sean números válidos
       ValidateNumber.validateOrFail({ value: pageValue, name: 'Page' });
       ValidateNumber.validateOrFail({ value: limitValue, name: 'Limit' });
-      console.log(this.filterManager.get());
+
       // Utilizar los valores convertidos en la paginación
       return  await this.getModel().paginate(
         {...this.filterManager.get()}, 

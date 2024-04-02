@@ -1,6 +1,6 @@
-import moment from "moment";
-import { DateFormat, momentFormat } from "@Commons/constants/constants";
-
+import moment from "moment"
+import { DateFormat, momentFormat } from "@Commons/constants/constants"
+ 
 export class DateMoment {
 
   /**
