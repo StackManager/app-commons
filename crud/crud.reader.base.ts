@@ -27,6 +27,7 @@ export abstract class BaseReader<T extends Document> {
   
       let query: T | null = null;
       const populateLength = this.populateModules.length;
+
       if (populateLength > 0)
         query = await this.getModel().findOne(this.filterManager.get()).populate(this.populateModules) as T;
       else  

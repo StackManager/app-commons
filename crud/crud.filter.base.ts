@@ -1,5 +1,6 @@
 import { GenericError } from "@Commons/errors/factory/generic.error";
 import { MODELERRORTEXTTYPE } from "@Commons/errors/error.types";
+import { Schema } from "mongoose";
 
 
 
@@ -18,15 +19,20 @@ export class FilterManager {
 
   // Función para validar el valor de entrada
   private validateValue(value: any): void {
-      if (typeof value !== 'string' && typeof value !== 'boolean') {
-          throw new GenericError([{
-              message: `Filter no adecuate`,
-              field: 'filter',
-              detail: `Filter no adecuate, BaseReader`,
-              code: MODELERRORTEXTTYPE.is_system_error
-          }]);
-      }
-  }
+    // console.log(value, typeof value )
+    // if (
+    //     typeof value !== 'string' &&
+    //     typeof value !== 'boolean' &&
+    //     !(value instanceof Schema.Types.ObjectId)
+    // ) {
+    //     throw new GenericError([{
+    //         message: `Filter no adecuate`,
+    //         field: 'filter',
+    //         detail: `Filter no adecuate, BaseReader`,
+    //         code: MODELERRORTEXTTYPE.is_system_error
+    //     }]);
+    // }
+    }
 
   // Método para agregar un filtro
   public addFilter(options: FilterOptions): void {
