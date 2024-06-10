@@ -2,13 +2,19 @@ import { GenericError } from '@Commons/errors/factory/generic.error';
 import { MODELERRORTEXTTYPE } from '@Commons/errors/error.types';
 import { Document, Model } from 'mongoose';
 
+interface ValidateUniqueFieldAttrs<T>{
+  model: Model<T>,
+  filter: any,
+  fieldName: keyof T
+}
+
 class ValidateSchema {
 
-  static async validateUniqueField<T extends Document>(
-    model: Model<T>,
-    filter: any,
-    fieldName: keyof T,
-    ): Promise<void> {
+  static async validateUniqueField<T extends Document>({
+    model,
+    filter,
+    fieldName,
+  }: ValidateUniqueFieldAttrs<T>): Promise<void> {
 
     let existingDoc = undefined;
     try {
@@ -44,7 +50,6 @@ class ValidateSchema {
       const doc = await model.findOne(filter);
 
       if (doc === null) {
-        console.log("entro al null")
         throw new GenericError([{
           message: `${fieldName} not found`,
           field: fieldName,
