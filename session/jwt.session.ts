@@ -1,5 +1,10 @@
 import jwt from 'jsonwebtoken';
 
+interface JWTGetSing{
+  payload: any, 
+  keySecret: string
+}
+
 export class JWT{
 
   static getVerify(token: any){
@@ -12,10 +17,11 @@ export class JWT{
     return verify;
   }
 
-  static  getSign(object: any ){
+  static sign({payload, keySecret}: JWTGetSing){
     return  jwt.sign(
-      object,
-      process.env.JWT_KEY!
+      payload,
+      keySecret,
+      { expiresIn: '1h' }
     );
   }
 }

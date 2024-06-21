@@ -8,6 +8,12 @@ interface ValidateUniqueFieldAttrs<T>{
   fieldName: keyof T
 }
 
+interface ValidateExistence<T>{  
+  model: Model<T>,
+  filter: any,
+  fieldName: string
+}
+
 class ValidateSchema {
 
   static async validateUniqueField<T extends Document>({
@@ -39,11 +45,30 @@ class ValidateSchema {
   }
 
 
-  static async validateExistence<T extends Document>(
-    model: Model<T>,
-    filter: any,
-    fieldName: string
-  ): Promise<void> {
+  static async validateExistence<T extends Document>({
+    model,
+    filter,
+    fieldName
+  
+    }: ValidateExistence<T>): Promise<T | undefined> {
+    try {
+      
+      const doc = await model.findOne(filter);
+
+      if (doc === null) {
+        return undefined;
+      }
+      return doc;
+    } catch (error) {
+      return undefined
+    }
+  }
+
+  static async validateExistenceOrFail<T extends Document>({
+    model,
+    filter,
+    fieldName
+   }: ValidateExistence<T>): Promise<T> {
 
     try {
       
@@ -57,9 +82,9 @@ class ValidateSchema {
           code: MODELERRORTEXTTYPE.is_invalid
         }]);
       }
-      
+      return doc;
     } catch (error) {
-      console.log(error);
+
       throw new GenericError([{
         message: `${fieldName} not found`,
         field: fieldName,
@@ -67,7 +92,6 @@ class ValidateSchema {
         code: MODELERRORTEXTTYPE.is_system_error
       }]);
     }
-
   }
 }
 
