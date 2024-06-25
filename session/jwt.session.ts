@@ -9,7 +9,7 @@ export class JWT{
 
   static getVerify(token: any){
     
-    const verify =  jwt.verify(
+    const verify = jwt.verify(
       token,
       process.env.JWT_KEY!
     );

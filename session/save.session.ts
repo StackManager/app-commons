@@ -54,10 +54,11 @@ class SessionSave{
    * @returns {Promise<string>} - Promise that resolves with the generated session token.
    */
   set(authDoc: AuthDoc) {
-    const data = this.getSessionParams(authDoc);
-    const jwt = JWT.getSign(data);
-    this.setSessionRequest(jwt)  
-    return jwt;
+    //const data = this.getSessionParams(authDoc);
+    //const jwt = JWT.getSign(data);
+    //this.setSessionRequest(jwt)  
+    //return jwt;
+    return ''
   }
 
 }
