@@ -18,11 +18,11 @@ export class SessionData {
   run(){
     const data: ISession = ControllerSession.get(this.req);
     this.id = data.id;
-    data.langId;
-    data.permissions;
-    data.expiresAt;
-    data.email;
-    data.createdAt;
+    //data.langId;
+    //data.permissions;
+    //data.expiresAt;
+    //data.email;
+    //data.createdAt;
   }
 
   set id(value: any) {

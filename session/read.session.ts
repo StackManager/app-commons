@@ -9,7 +9,7 @@ class SessionRead{
 
   session: ISession = ModelSessionPayloadDefault;
     
-  getOrFailed(request: Request): ISession{
+  getOrFailed(request: Request): ISession {
 
     this.getAuthenticated(request);
     return this.session;
@@ -26,16 +26,18 @@ class SessionRead{
    */
   private  getVerifySession(request: Request): void {
     try {
+      
       // Get the JWT token from the request's session property.
       const jwt = request?.session?.jwt;
 
       // Verify the JWT token and set the session property with the verified session object.
       // If the verification fails, this.session will be set to undefined.
       this.session =  JWT.getVerify(jwt) as ISession;
-      
+      if (!this.session) throw new NotAuthorizedError();
     } catch (err) {
       // If there is an error during JWT verification, set the session property to undefined.
-      this.session = ModelSessionPayloadDefault;
+      //this.session = ModelSessionPayloadDefault;
+      throw new NotAuthorizedError();
     }
   }
 

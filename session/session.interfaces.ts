@@ -9,11 +9,11 @@
 export interface ISession {
   id: string;
   email: string;
-  langId: string;
-  createdAt?: number; 
-  expiresAt?: number;
-  permissions?: string[];
-  permissionsServices?: IPermissionService | undefined;
+  // langId: string;
+  // createdAt?: number; 
+  // expiresAt?: number;
+  // permissions?: string[];
+  // permissionsServices?: IPermissionService | undefined;
 }
 
 
