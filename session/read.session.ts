@@ -1,45 +1,70 @@
 import { Request } from "express";
-import { ISession, ModelSessionPayloadDefault } from "./session.interfaces";
 import { JWT } from "./jwt.session";
+import { ISession, ModelSessionPayloadDefault } from "./session.interfaces";
 import { NotAuthorizedError } from "@Commons/errors/factory/authorized.error";
 
-
- 
 class SessionRead{
 
   session: ISession = ModelSessionPayloadDefault;
     
-  getOrFailed(request: Request): ISession {
+  getOrFailed(request: Request, keySecret: string): ISession {
 
-    this.getAuthenticated(request);
+    this.getAuthenticated(request, keySecret);
     return this.session;
   }
 
   /**
-   * Retrieves the session information by verifying the JWT token from the request.
-   * If the JWT token is valid, sets the session property to the verified session object.
-   * If the JWT token is invalid or missing, sets the session property to undefined.
-   *
+   * Verifies the JWT token from the request and sets the session property.
    * @param request - The request object from which to extract the JWT token.
-   * @throws Error if there is an issue with JWT verification, but it does not throw any specific error.
-   * @returns A Promise that resolves when the session is verified or undefined when the JWT token is invalid or missing.
+   * @throws NotAuthorizedError if the JWT token is invalid or missing.
    */
-  private  getVerifySession(request: Request): void {
-    try {
-      
-      // Get the JWT token from the request's session property.
-      const jwt = request?.session?.jwt;
+  private getSession(request: Request, keySecret: string): void {
 
-      // Verify the JWT token and set the session property with the verified session object.
-      // If the verification fails, this.session will be set to undefined.
-      this.session =  JWT.getVerify(jwt) as ISession;
-      if (!this.session) throw new NotAuthorizedError();
-    } catch (err) {
-      // If there is an error during JWT verification, set the session property to undefined.
-      //this.session = ModelSessionPayloadDefault;
-      throw new NotAuthorizedError();
-    }
+      //const jwt = request?.session?.jwt;
+      const token = request.headers['authorization'];
+      if (!token) throw new NotAuthorizedError("JWT is missing");
+      // console.log(token)
+      // Verify the structure of the JWT before proceeding.
+      if (!this.isJwtStructureValid(token)) throw new NotAuthorizedError("Invalid JWT structure");
+
+      // Verify the JWT token and check its expiration.
+      this.session = JWT.getVerify({token, keySecret}) as ISession;
+      if (!this.session) throw new NotAuthorizedError("Invalid JWT token");
+
+      // Check if the JWT is expired.
+      //if (this.isJwtExpired(this.session)) throw new NotAuthorizedError("JWT token is expired");
+
+      // Check the audience and issuer.
+      //if (!this.isJwtAudienceValid(this.session)) throw new NotAuthorizedError("Invalid JWT audience");
+      //if (!this.isJwtIssuerValid(this.session)) throw new NotAuthorizedError("Invalid JWT issuer");
+
+      // Check if the JWT is in the revocation list.
+      //if (this.isJwtRevoked(jwt)) throw new NotAuthorizedError("JWT token has been revoked");
+
+      // Check IP address (optional, for added security)
+      //if (!this.isIpAddressAllowed(request)) throw new NotAuthorizedError("IP address not allowed");
+
   }
+
+  /**
+   * Checks if the JWT token is expired.
+   * @param session - The session object containing the JWT payload.
+   * @returns true if the JWT is expired.
+   */
+  // private isJwtExpired(session: ISession): boolean {
+  //   const currentTime = Math.floor(Date.now() / 1000);
+  //   return session.exp < currentTime;
+  // }
+
+  /**
+   * Checks if the JWT structure is valid.
+   * @param jwt - The JWT token to check.
+   * @returns true if the structure is valid.
+   */
+    private isJwtStructureValid(jwt: string): boolean {
+      const parts = jwt.split('.');
+      return parts.length === 3;
+    }
 
   /**
    * Checks if the client is authenticated by verifying the user session.
@@ -51,9 +76,9 @@ class SessionRead{
    * @throws NotAuthorizedError if the session is invalid or missing, indicating the client is not authenticated.
    * @returns A Promise that resolves to true when the client is authenticated.
    */
-  private getAuthenticated(request: Request): boolean {
+  private getAuthenticated(request: Request, keySecret: string): boolean {
     // Get and verify the session information from the request.
-    this.getVerifySession(request);
+    this.getSession(request, keySecret);
 
     // Check if the session is valid. If not, throw a NotAuthorizedError.
     if (!this.session) {
@@ -64,32 +89,33 @@ class SessionRead{
     return true;
   }
 
-
-
-  // async getIsClientHasPermission(permissionsService: IPermissionService[] | undefined){
-    
-  //   if (!permissionsService || !this.session || permissionsService.length == 0) throw new NotAuthorizedError();
-    
-  //   //console.log("getIsClientHasPermission");
-  //   //console.log(this.session, permissionsService);
-
-  //   const user = await Auth.findOne({ email: this.session.email, status: true }, 'roleId');
-
-  //   if (!user) throw new NotAuthorizedError();
-
-  //   const role = await Role
-  //   .findOne({ _id: user.roleId, status: true }, 'permissions')
-  //   .populate({
-  //     path: 'permissions',
-  //     match: { slug: permissionsService[0].permission[0], status: true },
-  //     select: 'slug'
-  //   })
-  //   .exec();
-
-  //   if (!role || role?.permissions.length == 0) throw new NotAuthorizedError();
-
-  // }
-
 }
 
 export { SessionRead };
+
+
+
+
+// async getPermissions(permissionsService: IPermissionService[] | undefined){
+    
+//   if (!permissionsService || !this.session || permissionsService.length == 0) throw new NotAuthorizedError();
+  
+//   //console.log("getIsClientHasPermission");
+//   //console.log(this.session, permissionsService);
+
+//   const user = await Auth.findOne({ email: this.session.email, status: true }, 'roleId');
+
+//   if (!user) throw new NotAuthorizedError();
+
+//   const role = await Role
+//   .findOne({ _id: user.roleId, status: true }, 'permissions')
+//   .populate({
+//     path: 'permissions',
+//     match: { slug: permissionsService[0].permission[0], status: true },
+//     select: 'slug'
+//   })
+//   .exec();
+
+//   if (!role || role?.permissions.length == 0) throw new NotAuthorizedError();
+
+// }

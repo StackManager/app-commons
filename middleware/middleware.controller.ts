@@ -8,7 +8,7 @@ export class MiddlewareController {
   protected next: NextFunction;
   protected session: SessionData;
   protected getSession: boolean = false;
-  protected getPermission: string[] = [];
+  protected permissionService: string[] = [];
   
   constructor(req: Request, res: Response, next: NextFunction) {
     this.req = req;
@@ -20,9 +20,8 @@ export class MiddlewareController {
   async handleAsync(fn: Function): Promise<void> {
 
     try {
-      
       if (this.getSession) {
-        this.session.run();
+        await this.session.run(this.permissionService);
       }
 
       await fn();
