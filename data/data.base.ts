@@ -1,22 +1,23 @@
 import { ValidateBoolean } from "@Commons/validator/boolean.validator";
 import { ValidateObjectId } from "@Commons/validator/object.id.validator";
 import { ValidateRequired } from "@Commons/validator/required.validator";
+import {Schema} from 'mongoose';
 
 export class DataBase{
 
-  _id: string = '';
+  _id: Schema.Types.ObjectId | undefined
   deleted: boolean = false;
   status: boolean = false;
 
-  getId (){
-    return this._id;
+  getId (): Schema.Types.ObjectId {
+    return this._id!;
   }
 
   setId(value: any): void {
     const name = 'id';
     ValidateRequired.validateOrFail({ value, name });
     ValidateObjectId.validateOrFail({ value, name });
-    this._id = value;
+    this._id =  new Schema.Types.ObjectId(value);
   }
 
   getStatus (){
