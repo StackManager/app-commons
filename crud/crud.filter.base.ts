@@ -7,7 +7,7 @@ import { Schema } from "mongoose";
 export interface FilterOptions {
   value: any;
   key: string;
-  type?: 'regex' | 'direct';
+  type?: 'regex' | 'direct' | 'regex-equal';
 }
 
 export class FilterManager {
@@ -43,6 +43,9 @@ export class FilterManager {
       switch (options.type) {
           case 'regex':
               this.filter[options.key] = new RegExp(options.value, 'i');
+              break;
+          case 'regex-equal':
+              this.filter[options.key] = new RegExp('^' + options.value + '$', 'i');
               break;
           default:
               this.filter[options.key] = options.value;

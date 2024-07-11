@@ -55,8 +55,12 @@ export abstract class BaseList<T> {
       });
 
       } catch (err) {
-
-        throw new GenericError([{ message: `${this.variable} error system listing results`, field: this.variable, detail: `${this.variable} error system listing results`, code: MODELERRORTEXTTYPE.is_system_error }]);
+        throw new GenericError([{
+           message: `${this.variable} error system listing results`, 
+           field: this.variable, 
+           detail: `${this.variable} error system listing results`, 
+           code: MODELERRORTEXTTYPE.is_system_error 
+        }]);
       }
   }
 }

@@ -1,14 +1,15 @@
 import jwt from 'jsonwebtoken';
 import { ISession } from './session.interfaces';
 
-interface JWTGetSing{
-  payload: any, 
-  keySecret: string
+interface JWTGetSign{
+  payload: any;
+  keySecret: string;
+  sessionTime?: number;
 }
 
 interface GetVerify{
-  token: string,
-  keySecret: string
+  token: string;
+  keySecret: string;
 }
 
 export class JWT{
@@ -23,22 +24,23 @@ export class JWT{
     return verify;
   }
 
-  static sign({payload, keySecret}: JWTGetSing){
-
+  static sign({ payload, keySecret, sessionTime }: JWTGetSign) {
     const now = Date.now();
-    const expiresIn = process.env.SESSION_MAX_AGE || 86400000;
-    const expiresAt: number = now + (typeof expiresIn === 'string' ? parseInt(expiresIn, 10) : expiresIn) * 1000;
+    const defaultSessionTime = 60; // 1 hora en minutos
+    const effectiveSessionTime = sessionTime ? sessionTime : defaultSessionTime;
+    const expiresIn = effectiveSessionTime * 60 * 1000; // Convertir minutos a milisegundos
+    const expiresAt: number = now + expiresIn;
 
     const myPayload: ISession = {
-      ...payload,
-      createdAt: now,
-      expiresAt: expiresAt
-    }
+        ...payload,
+        createdAt: now,
+        expiresAt
+    };
 
-    return  jwt.sign(
-      myPayload,
-      keySecret,
-      { expiresIn: '1h' }
+    return jwt.sign(
+        myPayload,
+        keySecret,
+        { expiresIn: effectiveSessionTime * 60 } // Establecer tiempo de expiración en segundos
     );
-  }
+}
 }
