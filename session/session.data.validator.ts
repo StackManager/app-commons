@@ -33,6 +33,7 @@ export class SessionDataValidator {
     this.workSpaceId = sessionPayload?.workSpaceId;
     this.permissions = sessionPayload?.permissions;
     this.email = sessionPayload?.email;
+    console.log(this.keyPublic, this.permissions, this.email)
   }
 
   private wordSpaceValidator(){

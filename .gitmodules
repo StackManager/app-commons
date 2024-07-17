@@ -1,0 +1,3 @@
+[submodule "api-email/services-email/src/commons"]
+	path = api-email/services-email/src/commons
+	url = git@githubManager:StackManager/app-commons.git
