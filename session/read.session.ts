@@ -7,8 +7,8 @@ class SessionRead{
 
   session: ISession = ModelSessionPayloadDefault;
     
-  getOrFailed(request: Request, keySecret: string): ISession {
-
+  getOrFailed(request: Request, keySecret: string | undefined): ISession {
+    if (!keySecret) throw new NotAuthorizedError();
     this.getAuthenticated(request, keySecret);
     return this.session;
   }
