@@ -1,12 +1,11 @@
 import { Request } from 'express';
-import { getPermissionsByEmailAndWorkSpaceId } from '@Authentification/models/aggregations/get.permissions.by.email.and.work.spaceId';
 import { SessionRead } from '@Commons/session/read.session';
-import { WorkSpaceFromHeader } from '@WorkSpace/classes/get.work.space.header';
 import { findMatches } from '@Commons/functions/arrayInArray';
 import { NotAuthorizedError } from '@Commons/errors/factory/authorized.error';
 
 const {
-  SYSTEM_KEY_PUBLIC
+  SYSTEM_KEY_PUBLIC,
+  SYSTEM_KEY_PRIVATE
 } = process.env;
 
 export class SessionDataValidator {
@@ -19,15 +18,13 @@ export class SessionDataValidator {
   private permissions: string[] = [];
   private permissionService: string[] = [];
   private sessionRead = new SessionRead()
-  private workSpaceFromHeader  = new WorkSpaceFromHeader()
 
   constructor(req:Request){
     this.req = req;
   }
 
   async setSession(){
-    const workDoc = await this.workSpaceFromHeader.getWorkSpace(this.req)
-    const sessionPayload = this.sessionRead.getOrFailed(this.req, workDoc.keySecret);
+    const sessionPayload = this.sessionRead.getOrFailed(this.req, SYSTEM_KEY_PRIVATE);
     this._id = sessionPayload?.id;
     this.keyPublic = sessionPayload?.keyPublic;
     this.workSpaceId = sessionPayload?.workSpaceId;
