@@ -1,12 +1,12 @@
 import { ModelErrorBase } from '@Commons/errors/error.base';
-import { SessionData } from '@Commons/session/data/session.data';
+import { SessionDataValidator } from '@Commons/session/session.data.validator';
 import { Request, Response, NextFunction } from 'express';
 
 export class MiddlewareController {
   protected req: Request;
   protected res: Response;
   protected next: NextFunction;
-  protected session: SessionData;
+  protected session: SessionDataValidator;
   protected getSession: boolean = false;
   protected permissionService: string[] = [];
   
@@ -14,7 +14,7 @@ export class MiddlewareController {
     this.req = req;
     this.res = res;
     this.next = next;
-    this.session = new SessionData(this.req);
+    this.session = new SessionDataValidator(this.req);
   }
   
   async handleAsync(fn: Function): Promise<void> {

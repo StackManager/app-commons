@@ -10,17 +10,13 @@
     email: string;
     keyPublic: string;
     workSpaceId: string;
+    permissions: string[];
   }
 
   export const ModelSessionPayloadDefault = {
     id: '',
     email: '',
     keyPublic: '',
-    workSpaceId: ''
+    workSpaceId: '',
+    permissions: []
   }
-
-      // langId: string;
-    // createdAt?: number; 
-    // expiresAt?: number;
-    // permissions?: string[];
-    // permissionsServices?: IPermissionService | undefined;

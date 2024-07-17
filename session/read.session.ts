@@ -92,30 +92,3 @@ class SessionRead{
 }
 
 export { SessionRead };
-
-
-
-
-// async getPermissions(permissionsService: IPermissionService[] | undefined){
-    
-//   if (!permissionsService || !this.session || permissionsService.length == 0) throw new NotAuthorizedError();
-  
-//   //console.log("getIsClientHasPermission");
-//   //console.log(this.session, permissionsService);
-
-//   const user = await Auth.findOne({ email: this.session.email, status: true }, 'roleId');
-
-//   if (!user) throw new NotAuthorizedError();
-
-//   const role = await Role
-//   .findOne({ _id: user.roleId, status: true }, 'permissions')
-//   .populate({
-//     path: 'permissions',
-//     match: { slug: permissionsService[0].permission[0], status: true },
-//     select: 'slug'
-//   })
-//   .exec();
-
-//   if (!role || role?.permissions.length == 0) throw new NotAuthorizedError();
-
-// }
