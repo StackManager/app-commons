@@ -11,10 +11,10 @@ const {
 export class SessionDataValidator {
 
   private req: Request;
-  private _id: string = '';
-  private keyPublic: string = '';
-  private workSpaceId: string = '';
-  private email: string = '';
+  _id: string = '';
+  keyPublic: string = '';
+  workSpaceId: string = '';
+  email: string = '';
   private permissions: string[] = [];
   private permissionService: string[] = [];
   private sessionRead = new SessionRead()
