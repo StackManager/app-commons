@@ -7,6 +7,7 @@ export const usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;
 export const lettersAndSpacesRegex = /^[A-Za-z\s]+$/;
 export const onlyNumbersRegex = /^\d+$/;
 export const alphanumericAndSpacesRegex = /^[A-Za-z0-9\s]+$/;
+export const htmlCharactersRegex = /^[\s\S]*$/;
 export const alphanumericAndUnderscoresHyphensRegex = /^[A-Za-z0-9_-]+$/;
 export const base64PublicKeyRegex = /^[A-Za-z0-9#_+-\/=\[\]{}!@()<>%:\*\^=\.\+]+$/;
 
