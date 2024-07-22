@@ -4,8 +4,8 @@ const aws = require('@aws-sdk/client-ses');
 // Cargar las variables de entorno
 dotenv.config();
 
-export class SenderAWS {
-  async sendEmail({ to, subject, html }) {
+export class SenderAwsManager {
+  async send({ to, subject, html }: {to: string, subject: string, html: string}) {
     const transporter = nodemailer.createTransport({
       SES: {
         ses: new aws.SES({
@@ -28,13 +28,11 @@ export class SenderAWS {
 
     try {
       const info = await transporter.sendMail(mailOptions);
-      //console.log('gestion', info);
       return {
         success: true,
         message: 'Correo electrónico enviado exitosamente',
       };
     } catch (error) {
-      console.log('voy a nostrar un error', error);
       return {
         success: false,
         message: 'Error al enviar el correo electrónico',
