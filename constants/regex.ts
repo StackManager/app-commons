@@ -6,8 +6,8 @@ export const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
 export const usernameRegex = /^[a-zA-Z0-9_-]{3,16}$/;
 export const lettersAndSpacesRegex = /^[A-Za-z\s]+$/;
 export const onlyNumbersRegex = /^\d+$/;
-export const alphanumericAndSpacesRegex = /^[A-Za-z0-9\s]+$/;
+export const alphanumericAndSpacesRegex = /^[\p{L}\p{N}\s]+$/u;
 export const htmlCharactersRegex = /^[\s\S]*$/;
 export const alphanumericAndUnderscoresHyphensRegex = /^[A-Za-z0-9_-]+$/;
 export const base64PublicKeyRegex = /^[A-Za-z0-9#_+-\/=\[\]{}!@()<>%:\*\^=\.\+]+$/;
-
+export const alphanumericEspecialRegex = /^[\p{L}\p{N}\s#_+\-\/=\[\]{}!@()<>%:*^=.]+$/u;
