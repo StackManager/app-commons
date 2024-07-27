@@ -22,7 +22,7 @@ export class SenderAwsManager {
     const mailOptions = {
       from: process.env.EMAIL_AWS_SMTP_FROM, // Dirección de correo del remitente
       to, // Dirección de correo del destinatario
-      subject: `"Centro de notificaciones" <${process.env.EMAIL_AWS_SMTP_FROM}>`,
+      subject: `Centro de notificaciones`,
       html,
     };
 
@@ -33,6 +33,7 @@ export class SenderAwsManager {
         message: 'Correo electrónico enviado exitosamente',
       };
     } catch (error) {
+      console.log(error)
       return {
         success: false,
         message: 'Error al enviar el correo electrónico',
