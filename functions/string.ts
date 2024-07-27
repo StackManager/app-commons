@@ -16,3 +16,8 @@ export const convertToString = (input: any): string => {
 }
 
 
+export const replaceVariables = (text: string, variables: { [key: string]: string }): string => {
+  return text.replace(/\${(.*?)}/g, (_, key) => {
+    return variables[key] || '';
+  });
+}
