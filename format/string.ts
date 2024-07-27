@@ -47,3 +47,12 @@ export function lowerCaseCharacters(text: string | undefined) {
   if (text == undefined) return ''
   return text.toLocaleLowerCase();
 }
+
+export function removeWordFromText(text: string, wordToRemove: string): string {
+  try{
+    const regex = new RegExp(`\\b${wordToRemove}\\b`, 'gi');
+    return text.replace(regex, '').replace(/\s+/g, ' ').trim();
+  }catch{
+    return text
+  }
+}
