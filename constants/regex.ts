@@ -10,4 +10,4 @@ export const alphanumericAndSpacesRegex = /^[\p{L}\p{N}\s]+$/u;
 export const htmlCharactersRegex = /^[\s\S]*$/;
 export const alphanumericAndUnderscoresHyphensRegex = /^[A-Za-z0-9_-]+$/;
 export const base64PublicKeyRegex = /^[A-Za-z0-9#_+-\/=\[\]{}!@()<>%:\*\^=\.\+]+$/;
-export const alphanumericEspecialRegex = /^[\p{L}\p{N}\s#_+\-\/=\[\]{}!@()<>%:*^=.]+$/u;
+export const alphanumericEspecialRegex = /^[\p{L}\p{N}\s#_+\-\/=\[\]{}!@()<>%:;*^=.},$]+$/u;

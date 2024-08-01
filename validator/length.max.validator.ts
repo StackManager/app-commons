@@ -18,7 +18,7 @@ export class ValidateMaxLength {
     const variable = name || 'Value';
     
 
-    if (typeof value !== 'string') {
+    if (typeof value !== 'string' ) {
       throw new GenericError([{
         message: `${variable} must be a string`,
         field: variable,
