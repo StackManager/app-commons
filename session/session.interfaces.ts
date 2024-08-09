@@ -10,7 +10,9 @@
     email: string;
     keyPublic: string;
     workSpaceId: string;
-    permissions: string[];
+    microWorkSpaceId: string;
+    permissions: any;
+    workspaces: any;
   }
 
   export const ModelSessionPayloadDefault = {
@@ -18,5 +20,7 @@
     email: '',
     keyPublic: '',
     workSpaceId: '',
-    permissions: []
+    microWorkSpaceId: '',
+    permissions: [],
+    workspaces: []
   }
